@@ -7,7 +7,7 @@ import WindowMenuBar from './WindowMenuBar';
 interface WindowProps {
   id: string;
   title: string;
-  type: 'music' | 'projects' | 'portfolio';
+  type: 'music' | 'projects' | 'portfolio' | 'game';
   zIndex: number;
   position: { x: number; y: number };
   size: { width: number; height: number };
