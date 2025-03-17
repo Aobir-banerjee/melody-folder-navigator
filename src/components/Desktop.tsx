@@ -5,9 +5,10 @@ import Window from './Window';
 import MusicPlayer from './MusicPlayer';
 import ProjectFolder from './ProjectFolder';
 import Portfolio from './Portfolio';
+import SimpleGame from './SimpleGame';
 import ThemeToggle from './ThemeToggle';
 import Taskbar from './Taskbar';
-import { Music, FolderOpen, User } from 'lucide-react';
+import { Music, FolderOpen, User, Gamepad2 } from 'lucide-react';
 
 const Desktop: React.FC = () => {
   const { 
@@ -18,7 +19,7 @@ const Desktop: React.FC = () => {
   } = useDesktop();
 
   // Handle icon click
-  const handleIconClick = (type: 'music' | 'projects' | 'portfolio') => {
+  const handleIconClick = (type: 'music' | 'projects' | 'portfolio' | 'game') => {
     openWindow(type);
   };
 
@@ -60,6 +61,16 @@ const Desktop: React.FC = () => {
             </div>
             <span className="desktop-icon-text">Portfolio</span>
           </div>
+
+          <div 
+            className="desktop-icon"
+            onClick={() => handleIconClick('game')}
+          >
+            <div className="desktop-icon-img-container">
+              <Gamepad2 size={32} className="text-green-500 dark:text-green-400" />
+            </div>
+            <span className="desktop-icon-text">Simple Game</span>
+          </div>
         </div>
       </div>
       
@@ -83,6 +94,7 @@ const Desktop: React.FC = () => {
           {window.type === 'music' && <MusicPlayer />}
           {window.type === 'projects' && <ProjectFolder />}
           {window.type === 'portfolio' && <Portfolio />}
+          {window.type === 'game' && <SimpleGame />}
         </Window>
       ))}
       

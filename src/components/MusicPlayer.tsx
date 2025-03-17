@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import { MUSIC_TRACKS, Track } from '@/lib/constants';
 import { Play, Pause, SkipBack, SkipForward, Volume2, VolumeX } from 'lucide-react';
@@ -16,18 +17,52 @@ const MusicPlayer: React.FC = () => {
   const [volume, setVolume] = useState(0.7);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [isAudioLoaded, setIsAudioLoaded] = useState(false);
   
   const audioRef = useRef<HTMLAudioElement>(null);
   const progressRef = useRef<HTMLDivElement>(null);
   
   const currentTrack = tracks[currentTrackIndex];
 
+  // Load audio on component mount
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = volume;
+      
+      // Pre-load audio
+      audioRef.current.load();
+      
+      // Setup audio error handling
+      const handleAudioError = (e: ErrorEvent) => {
+        console.error("Audio error:", e);
+        setIsPlaying(false);
+      };
+      
+      audioRef.current.addEventListener('error', handleAudioError as EventListener);
+      
+      return () => {
+        if (audioRef.current) {
+          audioRef.current.removeEventListener('error', handleAudioError as EventListener);
+        }
+      };
+    }
+  }, []);
+
   useEffect(() => {
     // Reset player when track changes
     if (audioRef.current) {
-      if (isPlaying) {
-        audioRef.current.play().catch(e => console.error("Playback failed:", e));
-      }
+      const playPromise = isPlaying ? audioRef.current.play() : Promise.resolve();
+      
+      // Handle play promises properly
+      playPromise
+        .then(() => {
+          setIsAudioLoaded(true);
+        })
+        .catch(e => {
+          console.error("Playback failed:", e);
+          // User interaction may be needed for autoplay
+          setIsPlaying(false);
+        });
     }
   }, [currentTrackIndex, isPlaying]);
 
@@ -41,6 +76,7 @@ const MusicPlayer: React.FC = () => {
   const handleLoadedMetadata = () => {
     if (audioRef.current) {
       setDuration(audioRef.current.duration);
+      setIsAudioLoaded(true);
     }
   };
 
@@ -59,7 +95,13 @@ const MusicPlayer: React.FC = () => {
       if (isPlaying) {
         audioRef.current.pause();
       } else {
-        audioRef.current.play().catch(e => console.error("Playback failed:", e));
+        const playPromise = audioRef.current.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(error => {
+            console.error("Play failed:", error);
+            // Provide user feedback about the error
+          });
+        }
       }
       setIsPlaying(!isPlaying);
     }
@@ -123,6 +165,7 @@ const MusicPlayer: React.FC = () => {
         onEnded={handleEnded}
         onPlay={() => setIsPlaying(true)}
         onPause={() => setIsPlaying(false)}
+        preload="auto"
       />
       
       {/* Album art and info */}

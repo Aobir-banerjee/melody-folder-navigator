@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
-type WindowType = 'music' | 'projects' | 'portfolio';
+type WindowType = 'music' | 'projects' | 'portfolio' | 'game';
 
 interface Window {
   id: string;
@@ -58,6 +58,15 @@ const getWindowDefaults = (type: WindowType): Omit<Window, 'id'> => {
         zIndex: 1,
         position: { x: 140, y: 120 },
         size: { width: 800, height: 600 },
+      };
+    case 'game':
+      return {
+        type,
+        title: 'Simple Game',
+        isOpen: true,
+        zIndex: 1,
+        position: { x: 180, y: 140 },
+        size: { width: 450, height: 400 },
       };
     default:
       return {
