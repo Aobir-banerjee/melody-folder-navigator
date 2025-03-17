@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
 type WindowType = 'music' | 'projects' | 'portfolio';
@@ -39,25 +38,25 @@ const getWindowDefaults = (type: WindowType): Omit<Window, 'id'> => {
         title: 'Music Player',
         isOpen: true,
         zIndex: 1,
-        position: { ...basePosition, x: basePosition.x + 20 },
+        position: { x: 120, y: 80 },
         size: { ...baseSize, height: 500 },
       };
     case 'projects':
       return {
         type,
-        title: 'Projects',
+        title: 'My Projects',
         isOpen: true,
         zIndex: 1,
-        position: { ...basePosition, x: basePosition.x + 40, y: basePosition.y + 40 },
-        size: baseSize,
+        position: { x: 160, y: 100 },
+        size: { width: 700, height: 500 },
       };
     case 'portfolio':
       return {
         type,
-        title: 'Portfolio',
+        title: 'My Portfolio',
         isOpen: true,
         zIndex: 1,
-        position: { ...basePosition, x: basePosition.x + 60, y: basePosition.y + 60 },
+        position: { x: 140, y: 120 },
         size: { width: 800, height: 600 },
       };
     default:
@@ -78,7 +77,6 @@ export const DesktopProvider: React.FC<{ children: React.ReactNode }> = ({ child
   const [activeWindowId, setActiveWindowId] = useState<string | null>(null);
   const [highestZIndex, setHighestZIndex] = useState(1);
 
-  // Initialize theme based on user preference
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme');
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -92,7 +90,6 @@ export const DesktopProvider: React.FC<{ children: React.ReactNode }> = ({ child
     }
   }, []);
 
-  // Toggle theme function
   const toggleTheme = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light';
     setTheme(newTheme);
@@ -100,7 +97,6 @@ export const DesktopProvider: React.FC<{ children: React.ReactNode }> = ({ child
     localStorage.setItem('theme', newTheme);
   };
 
-  // Window management functions
   const openWindow = (type: WindowType) => {
     const existingWindow = windows.find(w => w.type === type && w.isOpen);
     

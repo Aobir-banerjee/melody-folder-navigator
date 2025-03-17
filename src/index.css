@@ -5,7 +5,7 @@
 
 @layer base {
   :root {
-    /* Light Theme */
+    /* Light Theme - Inspired by Windows XP/7 */
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
 
@@ -15,7 +15,7 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 210 64% 46%;
+    --primary: 221 83% 53%;
     --primary-foreground: 210 40% 98%;
 
     --secondary: 210 40% 96.1%;
@@ -24,7 +24,7 @@
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
 
-    --accent: 187 72% 31%;
+    --accent: 213 94% 68%;
     --accent-foreground: 222.2 47.4% 11.2%;
 
     --destructive: 0 84.2% 60.2%;
@@ -47,7 +47,7 @@
   }
 
   .dark {
-    /* Dark Theme */
+    /* Dark Theme - Inspired by Windows 10/11 Dark Mode */
     --background: 224 71% 4%;
     --foreground: 210 40% 98%;
 
@@ -57,7 +57,7 @@
     --popover: 224 71% 4%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 210 100% 66%;
+    --primary: 217 91% 60%;
     --primary-foreground: 222.2 47.4% 11.2%;
 
     --secondary: 217.2 32.6% 17.5%;
@@ -66,7 +66,7 @@
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
 
-    --accent: 187 70% 42%;
+    --accent: 217 91% 60%;
     --accent-foreground: 210 40% 98%;
 
     --destructive: 0 62.8% 30.6%;
@@ -107,38 +107,56 @@
 }
 
 @layer components {
+  /* Window Styling */
   .window {
-    @apply bg-white dark:bg-window-body-dark rounded-md overflow-hidden shadow-window dark:shadow-window-dark border border-border dark:border-border/10 backdrop-blur-sm animate-window-open;
+    @apply bg-white dark:bg-window-body-dark rounded-md overflow-hidden shadow-window dark:shadow-window-dark border border-gray-300 dark:border-gray-700 backdrop-blur-sm animate-window-open;
   }
   
   .window-header {
-    @apply bg-window-header-light dark:bg-window-header-dark text-white p-2 flex items-center justify-between select-none cursor-move;
+    @apply bg-gradient-to-r from-[#0070e0] to-[#3c98ff] dark:from-[#1a1d27] dark:to-[#2c3042] text-white p-2 flex items-center justify-between select-none cursor-move;
   }
   
   .window-body {
-    @apply bg-window-body-light dark:bg-window-body-dark p-4 overflow-auto;
+    @apply bg-[#f5f6fa] dark:bg-[#2d3142] p-4 overflow-auto;
   }
   
+  /* Desktop Icon Styling */
   .desktop-icon {
-    @apply flex flex-col items-center justify-center w-20 h-20 p-1 rounded-md transition-all duration-200 hover:bg-white/10 cursor-pointer select-none;
+    @apply flex flex-col items-center justify-center p-2 rounded-md transition-all duration-200 hover:bg-white/20 dark:hover:bg-black/20 cursor-pointer select-none w-24 h-24;
   }
   
-  .desktop-icon-img {
-    @apply w-10 h-10 mb-1 object-contain;
+  .desktop-icon-img-container {
+    @apply flex items-center justify-center w-16 h-16 mb-1 rounded-md bg-white/80 dark:bg-black/30 backdrop-blur-sm shadow-sm border border-gray-200 dark:border-gray-700;
   }
   
   .desktop-icon-text {
-    @apply text-xs text-center font-medium truncate max-w-full;
+    @apply text-xs text-center font-medium truncate max-w-full bg-white/70 dark:bg-black/50 backdrop-blur-sm px-1 py-0.5 rounded;
   }
 
+  /* Window Controls */
   .window-control {
     @apply w-3 h-3 rounded-full cursor-pointer transition-all duration-200;
   }
   
+  /* Taskbar Styling */
+  .taskbar {
+    @apply z-50;
+  }
+  
+  .window-button {
+    @apply flex-nowrap whitespace-nowrap;
+  }
+  
+  .start-button {
+    @apply transition-colors duration-200;
+  }
+  
+  /* Glass Panel */
   .glass-panel {
     @apply bg-white/80 dark:bg-black/40 backdrop-blur-lg border border-white/20 dark:border-white/10 rounded-lg;
   }
 
+  /* Hover Effects */
   .hover-scale {
     @apply transition-transform duration-200 hover:scale-[1.02];
   }

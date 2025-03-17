@@ -6,6 +6,7 @@ import MusicPlayer from './MusicPlayer';
 import ProjectFolder from './ProjectFolder';
 import Portfolio from './Portfolio';
 import ThemeToggle from './ThemeToggle';
+import Taskbar from './Taskbar';
 import { Music, FolderOpen, User } from 'lucide-react';
 
 const Desktop: React.FC = () => {
@@ -25,38 +26,40 @@ const Desktop: React.FC = () => {
     <div 
       className={`min-h-screen w-full 
                 bg-desktop-light dark:bg-desktop-dark transition-colors duration-300
-                flex flex-col overflow-hidden p-4`}
+                flex flex-col overflow-hidden`}
     >
       {/* Desktop Icons */}
-      <div className="grid grid-cols-1 gap-4 w-20">
-        <div 
-          className="desktop-icon"
-          onClick={() => handleIconClick('music')}
-        >
-          <div className="rounded-full bg-primary/10 p-2 mb-1">
-            <Music size={24} className="text-primary" />
+      <div className="flex-1 p-4">
+        <div className="grid grid-cols-3 md:grid-cols-5 lg:grid-cols-8 gap-4 justify-start">
+          <div 
+            className="desktop-icon"
+            onClick={() => handleIconClick('music')}
+          >
+            <div className="desktop-icon-img-container">
+              <Music size={32} className="text-primary" />
+            </div>
+            <span className="desktop-icon-text">Music Player</span>
           </div>
-          <span className="desktop-icon-text">Music</span>
-        </div>
-        
-        <div 
-          className="desktop-icon"
-          onClick={() => handleIconClick('projects')}
-        >
-          <div className="rounded-full bg-accent/10 p-2 mb-1">
-            <FolderOpen size={24} className="text-accent" />
+          
+          <div 
+            className="desktop-icon"
+            onClick={() => handleIconClick('projects')}
+          >
+            <div className="desktop-icon-img-container">
+              <FolderOpen size={32} className="text-accent" />
+            </div>
+            <span className="desktop-icon-text">My Projects</span>
           </div>
-          <span className="desktop-icon-text">Projects</span>
-        </div>
-        
-        <div 
-          className="desktop-icon"
-          onClick={() => handleIconClick('portfolio')}
-        >
-          <div className="rounded-full bg-secondary/50 p-2 mb-1">
-            <User size={24} className="text-secondary-foreground" />
+          
+          <div 
+            className="desktop-icon"
+            onClick={() => handleIconClick('portfolio')}
+          >
+            <div className="desktop-icon-img-container">
+              <User size={32} className="text-secondary-foreground" />
+            </div>
+            <span className="desktop-icon-text">Portfolio</span>
           </div>
-          <span className="desktop-icon-text">Portfolio</span>
         </div>
       </div>
       
@@ -71,6 +74,7 @@ const Desktop: React.FC = () => {
           key={window.id}
           id={window.id}
           title={window.title}
+          type={window.type}
           zIndex={window.zIndex}
           position={window.position}
           size={window.size}
@@ -81,6 +85,9 @@ const Desktop: React.FC = () => {
           {window.type === 'portfolio' && <Portfolio />}
         </Window>
       ))}
+      
+      {/* Taskbar */}
+      <Taskbar />
     </div>
   );
 };
