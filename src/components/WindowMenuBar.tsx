@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/menubar';
 
 interface WindowMenuBarProps {
-  type: 'music' | 'projects' | 'portfolio';
+  type: 'music' | 'projects' | 'portfolio' | 'game';
 }
 
 const WindowMenuBar: React.FC<WindowMenuBarProps> = ({ type }) => {
@@ -92,6 +92,18 @@ const WindowMenuBar: React.FC<WindowMenuBarProps> = ({ type }) => {
             <MenubarItem>Print</MenubarItem>
             <MenubarSeparator />
             <MenubarItem>Open in New Tab</MenubarItem>
+          </MenubarContent>
+        </MenubarMenu>
+      )}
+
+      {type === 'game' && (
+        <MenubarMenu>
+          <MenubarTrigger className="text-xs py-0.5 px-2">Game</MenubarTrigger>
+          <MenubarContent>
+            <MenubarItem>New Game</MenubarItem>
+            <MenubarItem>High Scores</MenubarItem>
+            <MenubarSeparator />
+            <MenubarItem>Difficulty</MenubarItem>
           </MenubarContent>
         </MenubarMenu>
       )}
